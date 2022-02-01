@@ -1,24 +1,24 @@
 import Candidate from "./Candidate"
 
 const CANDIDATES = [
-    'Marine Le Pen',
-    'Jean-Luc Mélenchon',
-    'Anne Hidalgo',
-    'Eric Zemmour',
-    'Emmanuel Macron',
+    // 'Marine Le Pen',
+    // 'Jean-Luc Mélenchon',
+    // 'Anne Hidalgo',
+    // 'Eric Zemmour',
+    // 'Emmanuel Macron',
     'Christiane Taubira',
-    'Valérie Pécresse',
-    'Yannick Jadot',
-    'Fabien Roussel'
+    // 'Valérie Pécresse',
+    // 'Yannick Jadot',
+    // 'Fabien Roussel'
 ]
 
-const START_DATE = new Date('2021-01-01');
+const START_DATE = new Date('2021-01-04'); // Must be a monday
 const END_DATE = new Date();
 
 export default class DataGetter {
 
-    constructor() {
-        this.candidates = CANDIDATES.map(_candidate => new Candidate(_candidate))
+    constructor(_candidateHandler) {
+        this.candidates = CANDIDATES.map(_candidate => new Candidate(_candidate, _candidateHandler))
         this.polls = []
         this.fetchPollResults()
         this.fetchWikipediaPageViews()
@@ -68,7 +68,7 @@ export default class DataGetter {
                     })
                 })
                 this.candidates.forEach(_candidate => {
-                    _candidate.setPollsData(candidatesData[_candidate.name])
+                    _candidate.setPollsData(candidatesData[_candidate.name], START_DATE, END_DATE)
                 })
             })
     }
