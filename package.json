@@ -37,6 +37,7 @@
         "vinyl-source-stream": "^2.0.0"
     },
     "dependencies": {
+        "gsap": "^3.9.1",
         "three": "^0.136.0"
     }
 }

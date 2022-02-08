@@ -6,6 +6,6 @@ const device = new DeviceData()
 const threeApp = new ThreeApp(device.screen)
 
 
-const data = new DataGetter(_candidate => {
+const data = new DataGetter( _candidate => {
     threeApp.loadCandidate(_candidate)
 })

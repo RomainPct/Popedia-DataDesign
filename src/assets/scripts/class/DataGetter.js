@@ -4,7 +4,7 @@ const CANDIDATES = [
     // 'Marine Le Pen',
     // 'Jean-Luc Mélenchon',
     // 'Anne Hidalgo',
-    // 'Eric Zemmour',
+    'Éric Zemmour',
     // 'Emmanuel Macron',
     'Christiane Taubira',
     // 'Valérie Pécresse',
@@ -18,7 +18,7 @@ const END_DATE = new Date();
 export default class DataGetter {
 
     constructor(_candidateHandler) {
-        this.candidates = CANDIDATES.map(_candidate => new Candidate(_candidate, _candidateHandler))
+        this.candidates = CANDIDATES.map((_candidate, _index) => new Candidate(_candidate, _index, _candidateHandler))
         this.polls = []
         this.fetchPollResults()
         this.fetchWikipediaPageViews()
@@ -48,7 +48,7 @@ export default class DataGetter {
 
     fetchPollResults() {
         const url = 'https://raw.githubusercontent.com/nsppolls/nsppolls/master/presidentielle.json'
-        let candidatesData = Object.fromEntries(CANDIDATES.map(_candidate => [_candidate, []]))
+        let candidatesData = Object.fromEntries(this.candidates.map(_candidate => [_candidate.pollName, []]))
         fetch(url)
             .then(_data => _data.json())
             .then(_polls => {
@@ -68,7 +68,7 @@ export default class DataGetter {
                     })
                 })
                 this.candidates.forEach(_candidate => {
-                    _candidate.setPollsData(candidatesData[_candidate.name], START_DATE, END_DATE)
+                    _candidate.setPollsData(candidatesData[_candidate.pollName], START_DATE, END_DATE)
                 })
             })
     }

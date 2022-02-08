@@ -1,3 +1,4 @@
+import gsap from 'gsap';
 import * as THREE from 'three'
 import GLTFLoader from './GLTFLoader';
 import CandidateHeadGraph from './objects/CandidateHeadGraph';
@@ -25,6 +26,7 @@ export default class ThreeApp {
         this.scene.add(this.mainLight)
 
         this.controls = new OrbitControls( this.camera, this.renderer.domElement )
+        this.controls.enableDamping = true
 
         this.mainPage = new MainPage(this.scene, this.loader)
 
@@ -36,9 +38,11 @@ export default class ThreeApp {
         this.cube.position.y = 3
         this.scene.add(this.cube)
 
-        this.camera.position.y = 16
-        this.camera.rotation.x = Math.PI * -0.5
+        this.camera.position.y = 20
         this.animate()
+
+        // gsap.to(this.controls.target, { ...this.cube.position, duration: 3 })
+        // gsap.to(this.camera.position, { ...this.cube.position, duration: 3 })
 
         window.addEventListener('resize', _ => this.updateScreenSize())
     }
@@ -49,15 +53,16 @@ export default class ThreeApp {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
-    loadCandidate(_candidate) {
-        this.candidateHeadGraphs.push(new CandidateHeadGraph(_candidate, this.scene, this.loader))
+    loadCandidate(_candidate, _index) {
+        this.candidateHeadGraphs.push(new CandidateHeadGraph(_candidate, _index, this.scene, this.loader))
     }
 
     animate() {
         requestAnimationFrame(_ => this.animate())
         this.cube.rotation.x += 0.01
         this.cube.rotation.y += 0.01
-        // this.controls.update()
+        this.controls.update()
+        // console.log(this.camera)
         this.renderer.render(this.scene, this.camera)
     }
     

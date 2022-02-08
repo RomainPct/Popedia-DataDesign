@@ -1,8 +1,11 @@
 export default class Candidate {
 
-    constructor(_name, _candidateHandler) {
+    constructor(_name, _index, _candidateHandler) {
         this.name = _name
+        this.index = _index
+        this.pollName = this.name.replace('É','E')
         this.id = _name.replace(' ', '_')
+        this.glbName = this.id.replace('É','E')
         this.polls = null
         this.wikipediaWeeklyViews = null
         this.candidateHandler = _candidateHandler
@@ -38,9 +41,8 @@ export default class Candidate {
     }
 
     setPollsData(_data, _startDate, _endDate) {
-        console.log('set polls')
         this.polls = []
-        let date = _startDate
+        let date = new Date(_startDate.getTime())
         let dataIndex = 0
         while (date <= _endDate) {
             let running = true
@@ -62,8 +64,6 @@ export default class Candidate {
                 this.polls.push(lastPoll ?? 0)
             }
         }
-        // this.polls = _data
-        console.log(this.polls)
         this.hasLoadedSomethingNew()
     }
 
