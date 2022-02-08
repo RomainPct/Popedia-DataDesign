@@ -39,10 +39,8 @@ export default class ThreeApp {
         this.scene.add(this.cube)
 
         this.camera.position.y = 20
+        this.camera.position.z = 2
         this.animate()
-
-        // gsap.to(this.controls.target, { ...this.cube.position, duration: 3 })
-        // gsap.to(this.camera.position, { ...this.cube.position, duration: 3 })
 
         window.addEventListener('resize', _ => this.updateScreenSize())
     }
@@ -55,6 +53,36 @@ export default class ThreeApp {
 
     loadCandidate(_candidate, _index) {
         this.candidateHeadGraphs.push(new CandidateHeadGraph(_candidate, _index, this.scene, this.loader))
+    }
+
+    moveTo(_href) {
+        let pos
+        let target
+        switch (_href) {
+            case 'polls':
+                pos = new THREE.Vector3(2.5, 2.52, 15)
+                target = new THREE.Vector3(2.5, 2.52, 0)
+                break
+            case 'popularity':
+                pos = new THREE.Vector3(20, 2.52, 4)
+                target = new THREE.Vector3(10, 2.52, 4)
+                break
+            case 'global':
+                pos = new THREE.Vector3(20, 5, 7)
+                target = new THREE.Vector3(10, 0, 5)
+                break
+            case 'project':
+                pos = new THREE.Vector3(0, 10, -4)
+                target = new THREE.Vector3(0, 0, -5)
+                break
+            default:
+                pos = new THREE.Vector3(0, 20, 2)
+                target = new THREE.Vector3(0, 0, 0)
+                break
+        }
+        console.log(_href)
+        gsap.to(this.controls.target, { ...target, duration: 3 })
+        gsap.to(this.camera.position, { ...pos, duration: 3 })
     }
 
     animate() {
