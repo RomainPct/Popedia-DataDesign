@@ -8,8 +8,8 @@ const CONFIG = {
     },
     position: {
         x: -10,
-        z: 3,
-        y: 0
+        z: 1,
+        y: 2.52/2
     }
 }
 
@@ -23,8 +23,8 @@ export default class CandidateHeadGraph {
                 _candidate.results.forEach((_result, _index) => {
                     const head = gltf.scene.clone()
                     head.position.y = (_result.intentions * 0.1) * CONFIG.scale
-                    head.position.z = (_index * 0.3) * CONFIG.scale
-                    head.position.x = (_candidate.index * -2) * CONFIG.scale
+                    head.position.z = (_index * 0.4) * CONFIG.scale
+                    head.position.x = (_candidate.index * -1) * CONFIG.scale
                     // const scale = Math.log2(_result.total) * 0.1
                     const scale = (0.2 + (_result.total * 0.000005)) * CONFIG.scale
                     head.scale.x = scale

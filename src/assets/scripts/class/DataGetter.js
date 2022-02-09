@@ -1,15 +1,15 @@
 import Candidate from "./Candidate"
 
 const CANDIDATES = [
-    // 'Marine Le Pen',
-    // 'Jean-Luc Mélenchon',
-    // 'Anne Hidalgo',
+    'Marine Le Pen',
+    'Jean-Luc Mélenchon',
+    'Anne Hidalgo',
     'Éric Zemmour',
-    // 'Emmanuel Macron',
+    'Emmanuel Macron',
     'Christiane Taubira',
-    // 'Valérie Pécresse',
-    // 'Yannick Jadot',
-    // 'Fabien Roussel'
+    'Valérie Pécresse',
+    'Yannick Jadot',
+    'Fabien Roussel'
 ]
 
 const START_DATE = new Date('2021-01-04'); // Must be a monday

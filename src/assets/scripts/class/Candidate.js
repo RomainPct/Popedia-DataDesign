@@ -4,7 +4,7 @@ export default class Candidate {
         this.name = _name
         this.index = _index
         this.pollName = this.name.replace('É','E')
-        this.id = _name.replace(' ', '_')
+        this.id = _name.replace(/ /g, '_')
         this.glbName = this.id.replace('É','E')
         this.polls = null
         this.wikipediaWeeklyViews = null
