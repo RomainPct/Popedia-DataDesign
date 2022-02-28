@@ -8,6 +8,8 @@ export default class Candidate {
         this.glbName = this.id.replace('É','E')
         this.polls = null
         this.wikipediaWeeklyViews = null
+        this.chartWikipediaWeeklyViews = null
+        this.labels = []
         this.candidateHandler = _candidateHandler
     }
 
@@ -29,6 +31,8 @@ export default class Candidate {
     setWikipediaData(_stats) {
         const length = _stats.length
         this.wikipediaWeeklyViews = []
+        this.chartWikipediaWeeklyViews = []
+        let lastLabel = null
         for (let i = 0; i < length; i+=7) {
             if (i + 7 > length) break
             const total = (_stats[i].views + _stats[i+1].views + _stats[i+2].views + _stats[i+3].views + _stats[i+4].views + _stats[i+5].views + _stats[i+6].views)
@@ -36,7 +40,16 @@ export default class Candidate {
                 total: total,
                 timestamp: _stats[i].timestamp
             })
+            this.chartWikipediaWeeklyViews.push(total) 
+            const label = _stats[i].timestamp.substring(0, 4)
+            if (lastLabel == label) {
+                this.labels.push(null)
+            } else {
+                lastLabel = label
+                this.labels.push(label)
+            }
         }
+        console.log(this.labels)
         this.hasLoadedSomethingNew()
     }
 

@@ -28,7 +28,13 @@
                 <h1>Candidate</h1>
                 <a href="/" id="js-closeCandidatePanel">Fermer</a>
             </div>
+            <h3>Vues sur Wikipédia</h3>
+            <div id="js-candidatePanelChartWiki" class="ct-chart"></div>
+            <h3>Sondage présidentiel</h3>
+            <div id="js-candidatePanelChart" class="ct-chart"></div>
         </div>
-        <iframe src="" frameborder="0"></iframe>
+        <div class="iframeBox">
+            <iframe src="" frameborder="0"></iframe>
+        </div>
     </section>
 </main>

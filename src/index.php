@@ -20,6 +20,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="{{style_url}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 </head>
 <body>
     <?php include 'pages/elements/header.php'; ?>
