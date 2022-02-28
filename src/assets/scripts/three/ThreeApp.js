@@ -35,9 +35,12 @@ export default class ThreeApp {
 
         this.candidateHeadGraphs = []
 
-        this.camera.position.y = 20
-        this.camera.position.z = 2
         this.animate()
+
+        const pos = new THREE.Vector3(-6, 20, 0.5)
+        const target = new THREE.Vector3(-6, 0, 0)
+        gsap.to(this.controls.target, { ...target, duration: 2 })
+        gsap.to(this.camera.position, { ...pos, duration: 2 })
 
         window.addEventListener('resize', _ => this.updateScreenSize())
     }
@@ -75,24 +78,24 @@ export default class ThreeApp {
         } else {
             switch (_href) {
                 case 'polls':
-                    pos = new THREE.Vector3(2.5, 2.52, 15)
-                    target = new THREE.Vector3(2.5, 2.52, 0)
+                    pos = new THREE.Vector3(-2, 2.52, 22)
+                    target = new THREE.Vector3(-2, 2.52, 0)
                     break
                 case 'popularity':
-                    pos = new THREE.Vector3(20, 2.52, 4)
-                    target = new THREE.Vector3(10, 2.52, 4)
+                    pos = new THREE.Vector3(20, 2.52, 6)
+                    target = new THREE.Vector3(10, 2.52, 6)
                     break
                 case 'global':
                     pos = new THREE.Vector3(20, 7, 10)
                     target = new THREE.Vector3(10, 0, 5)
                     break
                 case 'project':
-                    pos = new THREE.Vector3(0, 10, -4)
-                    target = new THREE.Vector3(0, 0, -5)
+                    pos = new THREE.Vector3(-5, 12, -3.5)
+                    target = new THREE.Vector3(-5, 0, -4)
                     break
                 default:
-                    pos = new THREE.Vector3(0, 20, 2)
-                    target = new THREE.Vector3(0, 0, 0)
+                    pos = new THREE.Vector3(-6, 20, 0.5)
+                    target = new THREE.Vector3(-6, 0, 0)
                     break
             }
             this.candidatePanel.close()
