@@ -160,40 +160,49 @@ gulp.task('cssMinifier', function() {
  /** 
   * Server
  */
- gulp.task('connect-sync', function(){
-     plugins.connectPhp.server({
-         port: 8000,
-         base: 'dist/',
-         keepalive: true
-     }, function(){
-         browserSync({
-             browser: 'firefox',
-             proxy: '127.0.0.1:8000'
-           })
-     })
-     gulp.watch(`./${source. static}**/*`, gulp.series('copyStaticFiles'))
-     gulp.watch(`./${source.images}**/*.(gif|svg)`, gulp.series('copySVGandGifs'))
-     gulp.watch(`./${source.images}**/*.(png|jpg|jpeg)`, gulp.series('minifyImages', 'convertToWebP'))
-     gulp.watch(`./${source.js}**/*.js`, gulp.series('js'))
-     gulp.watch(`./${source.css}**/*.styl`, gulp.series('css'))
-     gulp.watch(`./${source.base}**/.+(htaccess|htpasswd)`, gulp.series('copyConfig'))
-     gulp.watch('./src/**/*.php', gulp.series('copyPhpFiles'))
-     gulp.watch('./src/**/*.php').on('change', function () {
-         browserSync.reload()
-     })
+gulp.task('connect-sync', function(){
+    plugins.connectPhp.server({
+        port: 8000,
+        base: 'dist/',
+        keepalive: true
+    }, function(){
+        browserSync({
+            browser: 'firefox',
+            proxy: '127.0.0.1:8000'
+        })
+    })
+    gulp.watch(`./${source. static}**/*`, gulp.series('copyStaticFiles'))
+    gulp.watch(`./${source.images}**/*.(gif|svg)`, gulp.series('copySVGandGifs'))
+    gulp.watch(`./${source.images}**/*.(png|jpg|jpeg)`, gulp.series('minifyImages', 'convertToWebP'))
+    gulp.watch(`./${source.js}**/*.js`, gulp.series('js'))
+    gulp.watch(`./${source.css}**/*.styl`, gulp.series('css'))
+    gulp.watch(`./${source.base}**/.+(htaccess|htpasswd)`, gulp.series('copyConfig'))
+    gulp.watch('./src/**/*.php', gulp.series('copyPhpFiles'))
+    gulp.watch('./src/**/*.php').on('change', function () {
+        browserSync.reload()
+    })
  })
- 
- gulp.task('disconnect', function() {
-     plugins.connectPhp.closeServer()
- })
+
+gulp.task('start-db', plugins.shell.task('brew services start mysql'))
+
+gulp.task('stop-db', plugins.shell.task('brew services stop mysql'))
+
+gulp.task('disconnect', function(done) {
+    plugins.connectPhp.closeServer()
+    done()
+})
  
  /** 
   * Task definitions
  */
- gulp.task('js', gulp.series('jsBundler'))
- gulp.task('css', gulp.series('stylus', 'cssMinifier'))
- gulp.task('images', gulp.series('copySVGandGifs', 'minifyImages', 'convertToWebP'))
- gulp.task('assets', gulp.series( 'js', 'css', 'images', 'copyStaticFiles'))
- 
- gulp.task('build', gulp.series('clearGulpCache', 'copyPhpFiles', 'copyConfig', 'copyComposer', 'assets'))
- gulp.task('default', gulp.series('build', 'connect-sync','disconnect'))
+gulp.task('js', gulp.series('jsBundler'))
+gulp.task('css', gulp.series('stylus', 'cssMinifier'))
+gulp.task('images', gulp.series('copySVGandGifs', 'minifyImages', 'convertToWebP'))
+gulp.task('assets', gulp.series( 'js', 'css', 'images', 'copyStaticFiles'))
+
+gulp.task('stop', gulp.series('stop-db','disconnect'))
+gulp.task('build', gulp.series('stop', 'clearGulpCache', 'copyPhpFiles', 'copyConfig', 'copyComposer', 'assets'))
+gulp.task('dev', gulp.series('build', 'start-db', 'connect-sync'))
+
+
+gulp.task('default', gulp.series('dev'))

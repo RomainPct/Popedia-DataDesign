@@ -4,10 +4,13 @@ import GLTFLoader from './GLTFLoader';
 import CandidateHeadGraph from './objects/CandidateHeadGraph';
 import MainPage from './objects/MainPage';
 import OrbitControls from './OrbitControls'
+import ThreeConfig from './ThreeConfig';
 
 export default class ThreeApp {
     
-    constructor(_screen) {
+    constructor(_screen, _candidatePanel) {
+        this.candidatePanel = _candidatePanel
+        this.candidatePanel.closePanelHandler = _ => { this.updateCandidateGraphs(false) }
         this.loader = new GLTFLoader()
         this.scene = new THREE.Scene()
         this.scene.background = new THREE.Color( 0xffffff );
@@ -32,12 +35,6 @@ export default class ThreeApp {
 
         this.candidateHeadGraphs = []
 
-        const geometry = new THREE.BoxGeometry()
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } )
-        this.cube = new THREE.Mesh(geometry, material)
-        this.cube.position.y = 3
-        this.scene.add(this.cube)
-
         this.camera.position.y = 20
         this.camera.position.z = 2
         this.animate()
@@ -51,46 +48,63 @@ export default class ThreeApp {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
-    loadCandidate(_candidate, _index) {
-        this.candidateHeadGraphs.push(new CandidateHeadGraph(_candidate, _index, this.scene, this.loader))
+    loadCandidate(_candidate) {
+        this.candidateHeadGraphs.push(new CandidateHeadGraph(_candidate, this.scene, this.loader))
+    }
+
+    updateCandidateGraphs(_focus, _index = null) {
+        this.candidateHeadGraphs.forEach( _graph => {
+            if (_focus && _index != _graph.index) {
+                _graph.hide()
+            } else {
+                _graph.show()
+            }
+        })
     }
 
     moveTo(_href) {
         let pos
         let target
-        switch (_href) {
-            case 'polls':
-                pos = new THREE.Vector3(2.5, 2.52, 15)
-                target = new THREE.Vector3(2.5, 2.52, 0)
-                break
-            case 'popularity':
-                pos = new THREE.Vector3(20, 2.52, 4)
-                target = new THREE.Vector3(10, 2.52, 4)
-                break
-            case 'global':
-                pos = new THREE.Vector3(20, 5, 7)
-                target = new THREE.Vector3(10, 0, 5)
-                break
-            case 'project':
-                pos = new THREE.Vector3(0, 10, -4)
-                target = new THREE.Vector3(0, 0, -5)
-                break
-            default:
-                pos = new THREE.Vector3(0, 20, 2)
-                target = new THREE.Vector3(0, 0, 0)
-                break
+        if (_href.startsWith('candidate/')) {
+            const i = parseInt(_href.split('/')[1])
+            const z = (i) * ThreeConfig.scale
+            pos = new THREE.Vector3(20, 2.52, ThreeConfig.position.z + z)
+            target = new THREE.Vector3(10, 2.52, ThreeConfig.position.z + z)
+            this.candidatePanel.show(i)
+            this.updateCandidateGraphs(true, i)
+        } else {
+            switch (_href) {
+                case 'polls':
+                    pos = new THREE.Vector3(2.5, 2.52, 15)
+                    target = new THREE.Vector3(2.5, 2.52, 0)
+                    break
+                case 'popularity':
+                    pos = new THREE.Vector3(20, 2.52, 4)
+                    target = new THREE.Vector3(10, 2.52, 4)
+                    break
+                case 'global':
+                    pos = new THREE.Vector3(20, 7, 10)
+                    target = new THREE.Vector3(10, 0, 5)
+                    break
+                case 'project':
+                    pos = new THREE.Vector3(0, 10, -4)
+                    target = new THREE.Vector3(0, 0, -5)
+                    break
+                default:
+                    pos = new THREE.Vector3(0, 20, 2)
+                    target = new THREE.Vector3(0, 0, 0)
+                    break
+            }
+            this.candidatePanel.close()
+            this.updateCandidateGraphs(false)
         }
-        console.log(_href)
         gsap.to(this.controls.target, { ...target, duration: 3 })
         gsap.to(this.camera.position, { ...pos, duration: 3 })
     }
 
     animate() {
         requestAnimationFrame(_ => this.animate())
-        this.cube.rotation.x += 0.01
-        this.cube.rotation.y += 0.01
         this.controls.update()
-        // console.log(this.camera)
         this.renderer.render(this.scene, this.camera)
     }
     

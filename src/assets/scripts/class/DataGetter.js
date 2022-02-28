@@ -17,11 +17,17 @@ const END_DATE = new Date();
 
 export default class DataGetter {
 
-    constructor(_candidateHandler) {
+    constructor() {}
+
+    load(_candidateHandler) {
         this.candidates = CANDIDATES.map((_candidate, _index) => new Candidate(_candidate, _index, _candidateHandler))
         this.polls = []
         this.fetchPollResults()
         this.fetchWikipediaPageViews()
+    }
+
+    getCandidate(_index) {
+        return this.candidates[_index]
     }
 
     formatDate(_d) {
