@@ -14,7 +14,6 @@ export default class CandidatePanel {
         const candidate = this.data.getCandidate(_i)
         const url = `https://fr.m.wikipedia.org/wiki/${candidate.id}`
         this.frame.setAttribute('src', url)
-        console.log(candidate.chartWikipediaWeeklyViews)
         const options = {
             fullWidth: true,
             showPoint: false,
