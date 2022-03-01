@@ -25,8 +25,22 @@ export default class ThreeApp {
         this.renderer.setSize(_screen.width, _screen.height)
         document.body.appendChild(this.renderer.domElement)
 
-        this.mainLight = new THREE.AmbientLight(0xffffff, 1)
+        this.plane = new THREE.Mesh(
+            new THREE.PlaneGeometry(1000, 1000, 1, 1),
+            new THREE.MeshStandardMaterial()
+        )
+        this.plane.rotation.x = Math.PI * -0.5
+        this.scene.add(this.plane)
+
+
+        this.mainLight = new THREE.AmbientLight(0xffffff, .6)
         this.scene.add(this.mainLight)
+
+        this.light = new THREE.DirectionalLight(0xffffff, .8)
+        this.light.position.set(-20, 10, -20)
+        this.scene.add(this.light)
+        // const helper = new THREE.DirectionalLightHelper(this.light, 1, 0x000000)
+        // this.scene.add(helper)
 
         this.controls = new OrbitControls( this.camera, this.renderer.domElement )
         this.controls.enableDamping = true

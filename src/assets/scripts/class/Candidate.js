@@ -6,7 +6,7 @@ export default class Candidate {
         this.pollName = this.name.replace('É','E')
         this.id = _name.replace(/ /g, '_')
         this.glbName = this.id.replace('É','E').replace('é','e').replace('é','e')
-        console.log(this.glbName)
+        // console.log(this.glbName)
         this.polls = null
         this.wikipediaWeeklyViews = null
         this.chartWikipediaWeeklyViews = null

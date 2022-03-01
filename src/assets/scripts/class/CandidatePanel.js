@@ -29,7 +29,7 @@ export default class CandidatePanel {
         new Chartist.Line('#js-candidatePanelChart', {
             labels: candidate.labels,
             series: [
-                candidate.polls,
+                candidate.polls
             ]
         }, {...options, low: 0, high: 50, axisY: {
             labelInterpolationFnc: (_val) => {
