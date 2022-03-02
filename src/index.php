@@ -5,16 +5,17 @@
     <title><?php include 'php/rooterTitle.php' ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="">
+    <meta name="description" content="Découvrez les candidats à l'électione présidentielle sous un nouvel angle grâce à une mise en parallèle avec la popularité sur Wikipédia.">
 
     <!-- OG Data -->
-    <meta property="og:image" content="">
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:url" content="">
+    <meta property="og:image" content="https://beta.romainpenchenat.com/assets/images/ekipedia_og.jpg">
+    <meta property="og:title" content="Ekipédia - Visualisation de la présidentielle 2022">
+    <meta property="og:description" content="Découvrez les candidats à l'électione présidentielle sous un nouvel angle grâce à une mise en parallèle avec la popularité sur Wikipédia.">
+    <meta property="og:url" content="https://beta.romainpenchenat.com/">
     <meta property="og:locale" content="fr_FR">
-    <meta property="og:site_name" content="">
+    <meta property="og:site_name" content="Ekipédia - Visualisation de la présidentielle 2022">
     <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon : https://realfavicongenerator.net -->
 
